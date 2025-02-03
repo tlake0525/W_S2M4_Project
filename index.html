@@ -2,220 +2,257 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <title>Web Sprint 2 Challenge</title>
+  <script id="challenge">
+    // 👉 CHALLENGE 1
+    function profileActivation(profile, reason) {
+      if (profile.active) {
+        if (!reason) {
+            return "confirm status manually";
+        }
+        profile.active = false;
+        profile.reason = reason;
+    } else {
+        profile.active = true;
+        delete profile.reason;
+    }
+    return profile;
+    }
+
+    // 👉 CHALLENGE 2
+    function mineSweeper(grid, x, y) {
+      if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length)
+    if (grid[x][y] === "🟥") {
+        return "Mine! Game Over.";
+    } else if (grid[x][y] === "🟦") {
+        return "Safe spot. Continue playing.";
+    } else {
+        return "Unknown grid value";
+    }
+}
+
+    // 👉 CHALLENGE 3
+    function booleanize(obj) {
+      for (let key in obj) {
+        if (key.length > 9) {
+            return "shorten all prop names to 9 chars or less";
+        }
+        if (obj[key] === 0) {
+            obj[key] = false;
+        } else if (obj[key] === 1) {
+            obj[key] = true;
+        } else if (obj[key] === null) {
+            delete obj[key];
+        }
+    }
+    return obj;
+}
+
+    // 👉 CHALLENGE 4
+    function scrub(text, forbidden) {
+      if (!text || forbidden.length === 0) {
+        return text;
+    }
+
+    let words = text.split(' ');
+
+    for (let i = 0; i < words.length; i++) {
+        let cleanWord = words[i].toLowerCase();
+        for (let j = 0; j < forbidden.length; j++) {
+            if (cleanWord === forbidden[j].toLowerCase()) {
+                words[i] = 'x'.repeat(forbidden[j].length);
+            }
+        }
+    }
+
+    return words.join(' ');
+}
+
+    // 👉 CHALLENGE 5 (bonus, NOT graded)
+    function normalizePhoneNumber(num) {
+      if (num.length !== 10 || isNaN(num)) {
+        throw new Error("Input must be a string representing a ten-digit number.");
+    }
+    return `(${num.slice(0, 3)}) ${num.slice(3, 6)}-${num.slice(6)}`;
+}
+
+    // 👉 CHALLENGE 6 (bonus, NOT graded)
+    function diceRolls() {
+      import random
+
+def diceRolls():
+    consecutive_sixes = 0
+    total_rolls = 0
+    
+    while consecutive_sixes < 3:
+        roll = random.randint(1, 6)
+        total_rolls += 1
+        
+        if roll == 6:
+            consecutive_sixes += 1
+        else:
+            consecutive_sixes = 0
+    
+    return total_rolls
+
+# Test the function
+print(diceRolls())
+
+    }
+
+    // 🧪 DO NOT make any changes below this line ===================
+    globalThis.challengeVersion = 1
+    globalThis.profileActivation = profileActivation
+    globalThis.mineSweeper = mineSweeper
+    globalThis.booleanize = booleanize
+    globalThis.scrub = scrub
+  </script>
   <style>
-    /* 👉 Task 1- Apply the reset found on this page: https://www.joshwcomeau.com/css/custom-css-reset/ */
-/* 1. Use a more-intuitive box-sizing model */
-*, *::before, *::after {
-    box-sizing: border-box;
-  }
-  /* 2. Remove default margin */
-  * {
-    margin: 0;
-  }
-  body {
-    /* 3. Add accessible line-height */
-    line-height: 1.5;
-    /* 4. Improve text rendering */
-    -webkit-font-smoothing: antialiased;
-  }
-  /* 5. Improve media defaults */
-  img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
-  }
-  /* 6. Inherit fonts for form controls */
-  input, button, textarea, select {
-    font: inherit;
-  }
-  /* 7. Avoid text overflows */
-  p, h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
-  }
-  /* 8. Improve line wrapping */
-  p {
-    text-wrap: pretty;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    text-wrap: balance;
-  }
-  /*
-    9. Create a root stacking context
-  */
-  #root, #__next {
-    isolation: isolate;
-  </style>
-  <style>
-    /* 👉 Task 2- Target the body element.
-    Apply a font family of Arial to the body element.
-    The font property is inherited by descendant (nested) elements. */
-    body {
-      font-family: Arial, Helvetica, sans-serif;
+    .widget {
+      padding: 0 0 0.5rem 0.65rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid black;
+      border-radius: 0.5rem;
     }
 
-    /* 👉 Task 3- Target the element with id headerTop.
-    Apply white color to the text, some padding using px or rem units, and a dark background color. */
-    #headerTop {
-      background-color: blue;
-      color:white;
-      padding: 0.5rem;
+    .widget p {
+      font-size: 0.75rem;
+      font-style: italic;
     }
 
-    /* 👉 Task 4- Target the divs that are directly nested underneath the id headerTop.
-    Make them display as inline block, instead of block.
-    This will make them render on the same line. */
-    .incline-container {
+    .row>div {
       display: inline-block;
-    }
-
-    /* 👉 Task 5- Target the spans that are nested inside the id headerTop.
-    Make them have some margin on the right.
-    This will prevent the spans from crashing against one another. */
-    #headerTop span{
-      margin-right: 0.5rem;
-    }
-
-    /* 👉 Task 6- Target the first span nested inside the element with id headerTop.
-    Make it have a font weight of bold, and transform the text to uppercase. */
-    .logo {
-      text-transform: uppercase;
-      font-weight: bold;
-    }
-
-    /* 👉 Task 7- Target the id headerBottom.
-    Give it a bottom border of 1 pixel, solid gray, and a little bit of padding using px or rem units. */
-    #headerBottom {
-      border-bottom: 1px solid gray;
-      padding: 0.5rem;
-    }
-
-    /* 👉 Task 8- Target the divs that are nested directly inside the element with id headerBottom.
-    Make them display as inline block, instead of block.
-    This will cause them to render on the same line.
-    You can consolidate this rule with the one on step. 4 */
-    #headerBottom > div {
-      display: inline-block;
-    }
-
-    /* 👉 Task 9- Target the "Compose" button, although note it's a div instead an actual button.
-    Give it color, bold text, background, padding, border radius, margin right, and a cursor of pointer. */
-    .blue-btn {
-      color: white;
-      background-color: blue;
-      padding: 0.4rem;
-      border-radius: 4px;
-      margin-right: 1rem;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    /* 👉 Task 10- Research how to remove all the default styling of button elements.
-    Target the button elements inside the element with id headerBottom.
-    Remove all their styling, give them a bit of margin to the right, and a cursor of pointer. */
-    #headerBottom button{
-      padding: 0;
-      border: none;
-      background: none;
-      margin-right: 1rem;
+      background-color: lightgrey;
+      border: 1px solid grey;
+      width: 2rem;
+      height: 2rem;
       cursor: pointer;
     }
 
-    /* 👉 Task 11- Target the button element inside the id headerBottom that has a class of active
-    Make the font weight be bolder, and add a bottom border of 2 pixels solid color (you choose the color).
-    Add the class name to the "All mail" button. */
-    #headerBottom button.active {
-      border-bottom: 2px solid blue;
-      font-weight: bold;
+    #outcome {
+      font-size: 3rem;
     }
-
-    /* 👉 Task 12- Target all divs directly nested inside elements with a class of email,
-    and make them display as inline-block elements.
-    This will make each email render all its details in the same line*/
-    .email > div {
-      display: inline-block;
-    }
-
-    /* 👉 Task 13- Target the elements with a class of email.
-    Give them some padding, bigger padding to the left, and a bottom border of very light grey. */
-    .email {
-      padding: 0.4rem;
-      padding-left: 1rem;
-      border-bottom: 1px solid gray;
-    }
-
-    /* 👉 Task 14- Target each div inside the element with a class of email.
-    Make the email author and the email subject take 35% of the width of the parent element.
-    Make the check, the date and the size take up 8% of the width of the parent element.
-    This will arrange the details in visible columns. */
-    .email-name, .email-subject {
-      width: 35%
-    }
-    .email-check, .email-date, .email-size {
-      width: 8%
-    }
-
-    /* 👉 Task 15- Target the second email and have its font weight be bold.
-    This will make it look "unread". */
-    .email:nth-child(2) {
-      font-weight: bold;
-    }
-
-    /* Well done! Check the design file to make sure you are close enough. */
-
   </style>
-  <title>Document</title>
 </head>
 
 <body>
-    <div>
-    <header>
-      <div id="headerTop">
-        <div class="inline-container">
-          <span class="logo">Super Mail</span>
-          <span>Jess</span>
-        </div>
-        <div class="inline-container">
-          <input type="text" placeholder="Search Mail" />
-        </div>
-      </div>
-      <div id="headerBottom">
-        <div class="blue-btn">Compose</div>
-        <div>
-          <button class="active">All mail</button>
-          <button>Unread</button>
-          <button>Pinned</button>
-          <button>VIPs</button>
-        </div>
-      </div>
-    </header>
-    <main id="emails">
-      <div class="email">
-        <div class="email-check"><input type="checkbox" /></div>
-        <div class="email-name">Carol Shaw</div>
-        <div class="email-subject">Your login link</div>
-        <div class="email-date">Feb 28</div>
-        <div class="email-size">16 KB</div>
-      </div>
-    </main>
-  </div>
+  <h1>Web Sprint 2 Challenge </h1>
+  <p>Open this HTML document in VSCode to find your challenges</p>
+  <!-- widgets start -->
+  <section class="widget">
+    <p>Click on a square! (this widget uses the mineSweeper function)</p>
+    <div class="row" id="row1">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="row" id="row2">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="row" id="row3">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <span id="outcome"></span>
+  </section>
+  <form class="widget">
+    <p>Type a ten-digit number! (this widget uses the normalizePhoneNumber function)</p>
+    <input type="text" id="phoneNumInput" maxlength="10" />
+    <span id="normalized"></span>
+  </form>
+  <!-- widgets end -->
 
-  <script>
-    // ❗ Note: do not change ids or class names inside the main element
-    // or the following code to programmatically add emails will stop working
-    const emailData = [
-      { name: 'Ada Lovelace', subject: 'A new device is using your account', date: 'Feb 28', size: '2 KB' },
-      { name: 'Grace Hopper', subject: 'Undelivered mail returned to sender', date: 'Feb 27', size: '6 KB' },
-      { name: 'Carol Shaw', subject: 'Approve sign-in', date: 'Feb 25', size: '14 KB' },
-      { name: 'Edith Clarke', subject: 'Fwd: Invoice', date: 'Feb 24', size: '33 KB' },
-    ]
-    emailData.forEach(email => {
-      const clone = emails.querySelector('.email').cloneNode(true)
-      clone.querySelector('.email-name').textContent = email.name
-      clone.querySelector('.email-subject').textContent = email.subject
-      clone.querySelector('.email-date').textContent = email.date
-      clone.querySelector('.email-size').textContent = email.size
-      emails.append(clone)
+  <!-- The following script loads from the Internet a library called Lodash that helps with testing -->
+  <script id="lodash" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+  <!-- The following script executes the tests you see when you open the Console in Chrome -->
+  <script id="tests">
+    runTests('CHALLENGE 1 - profileActivation', profileActivation, [
+      [[{ active: true }], 'confirm status manually'],
+      [[{ active: true }, 'because'], { active: false, reason: 'because' }],
+      [[{ active: false, reason: 'because' }], { active: true }],
+    ])
+    runTests('CHALLENGE 2 - mineSweeper', mineSweeper, [
+      [[[["🟥", "🟦", "🟥"], ["🟦", "🟥", "🟥"], ["🟥", "🟦", "🟦"]], 0, 4], "invalid coordinates"],
+      [[[["🟥", "🟦", "🟥"], ["🟦", "🟥", "🟥"], ["🟥", "🟦", "🟦"]], 0, 1], "invalid coordinates"],
+      [[[["🟥", "🟦", "🟥"], ["🟦", "🟥", "🟥"], ["🟥", "🟦", "🟦"]], 1, 4], "invalid coordinates"],
+      [[[["🟦", "🟦", "🟥"], ["🟦", "🟦", "🟦"], ["🟦", "🟦", "🟥"]], 1, 1], "🟦 🥳"],
+      [[[["🟦", "🟥", "🟦"], ["🟦", "🟦", "🟦"], ["🟥", "🟦", "🟥"]], 2, 1], "🟥 💀"],
+      [[[["🟥", "🟦", "🟥"], ["🟥", "🟥", "🟦"], ["🟥", "🟥", "🟦"]], 3, 1], "🟥 💀"],
+      [[[["🟥", "🟦", "🟦"], ["🟥", "🟦", "🟥"], ["🟦", "🟦", "🟦"]], 1, 2], "🟥 💀"],
+      [[[["🟥", "🟥", "🟥"], ["🟥", "🟦", "🟥"], ["🟦", "🟥", "🟦"]], 2, 2], "🟦 🥳"],
+      [[[["🟥", "🟦", "🟦"], ["🟦", "🟥", "🟥"], ["🟥", "🟥", "🟦"]], 3, 2], "🟥 💀"],
+      [[[["🟥", "🟥", "🟥"], ["🟦", "🟦", "🟥"], ["🟥", "🟥", "🟦"]], 1, 3], "🟥 💀"],
+      [[[["🟥", "🟦", "🟥"], ["🟥", "🟥", "🟥"], ["🟥", "🟦", "🟥"]], 2, 3], "🟦 🥳"],
+      [[[["🟥", "🟥", "🟥"], ["🟦", "🟥", "🟥"], ["🟥", "🟥", "🟦"]], 3, 3], "🟦 🥳"],
+      [[[["🟥", "🟦", "🟦"], ["🟥", "🟥", "🟦"], ["🟥", "🟥", "🟥"]], 1, 1], "🟥 💀"],
+      [[[["🟥", "🟦", "🟦"], ["🟥", "🟥", "🟦"], ["🟥", "🟥", "🟥"]], 2, 2], "🟥 💀"],
+      [[[["🟥", "🟦", "🟦"], ["🟥", "🟥", "🟦"], ["🟥", "🟥", "🟥"]], 3, 3], "🟥 💀"],
+    ])
+    runTests('CHALLENGE 3 - booleanize', booleanize, [
+      [[{ bad1: null }], {}],
+      [[{ bad1: null, bad2: null }], {}],
+      [[{ '0123456789': 1 }], 'shorten all prop names to 9 chars or less'],
+      [[{ a: 1, b: 1 }], { a: true, b: true }],
+      [[{ a: 0, b: 0 }], { a: false, b: false }],
+      [[{ a: 1, b: 0, c: null, d: 'Lady Gaga' }], { a: true, b: false, d: 'Lady Gaga' }],
+    ])
+    runTests('CHALLENGE 4 - scrub', scrub, [
+      [["out of the silent planet", ["of", "silent"]], "out xx the xxxxxx planet"],
+      [["out of the silent planet", ["of", "planet"]], "out xx the silent xxxxxx"],
+      [["the ghost of the navigator", ["the"]], "xxx ghost of xxx navigator"],
+      [["lost somewhere in time", []], "lost somewhere in time"],
+      [["aces high", ["high", "aces", "hearts"]], "xxxx xxxx"],
+      [["", ["high", "aces"]], ""],
+    ])
+    runTests('CHALLENGE 5 (OPTIONAL) - normalizePhoneNumber', normalizePhoneNumber, [
+      [["1234567890"], "(123) 456-7890"],
+      [["1111111111"], "(111) 111-1111"],
+      [["9876543210"], "(987) 654-3210"],
+    ])
+    console.log('\nCHALLENGE 6 (OPTIONAL) does not have auto tests - diceRolls')
+    function runTests(testName, func, tests) {
+      let results = []
+      tests.forEach(test => {
+        const originalArgsList = _.cloneDeep(test[0])
+        const argsList = test[0]
+        const expected = test[1]
+        const actual = func.apply(null, argsList)
+        results.push([argsList, expected, actual, originalArgsList])
+      })
+      console.log('\n' + testName)
+      if (results.every(result => _.isEqual(result[1], result[2]))) console.log('\t✅ All tests pass')
+      else if (results.every(result => !_.isEqual(result[1], result[2]))) console.log('\t❌ All tests fail')
+      else results.forEach((result, idx) => {
+        if (_.isEqual(result[1], result[2])) console.log(`\t✅ Test ${idx + 1} passes`)
+        else console.log(`\t❌ Test ${idx + 1} fails:
+           ${func.name}(${result[3].map(JSON.stringify)})
+           👉 should return ${JSON.stringify(result[1])}
+           👉 but returns ${JSON.stringify(result[2])}`)
+      })
+    }
+    const gridElems = [Array.from(row1.children), Array.from(row2.children), Array.from(row3.children)]
+    const squares = ["🟥", "🟦"]
+    let grid = [[], [], []]
+    gridElems.forEach((row, idxRow) => {
+      row.forEach((square, idxSquare) => {
+        const emoji = squares[Math.floor(Math.random() * 2)]
+        grid[idxRow].push(emoji)
+        if (emoji === squares[0]) square.style.backgroundColor = '#ffecec'
+        else square.style.backgroundColor = '#f2f2ff'
+        square.onclick = () => {
+          const x = idxSquare + 1
+          const y = idxRow + 1
+          console.log(`\nYou clicked coordinates [${x}, ${y}]`)
+          outcome.textContent = mineSweeper(grid, x, y)
+        }
+      })
     })
+    phoneNumInput.oninput = evt => {
+      normalized.textContent = normalizePhoneNumber(evt.target.value)
+    }
   </script>
 </body>
 
